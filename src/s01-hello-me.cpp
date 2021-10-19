@@ -7,7 +7,7 @@
 
 auto main() -> int
 {
-    std::cout << "Hello, Weronika/n";
+    std::cout << "Hello, Weronika\n";
    
  return 0;
 }
