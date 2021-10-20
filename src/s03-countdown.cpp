@@ -1,17 +1,15 @@
 #include <iostream>
 
-int main(int argc, char* argv[]) -> int {
+int liczba;
+auto main() -> int
+ {
 
-auto a = std::stoi(argv[1]);
+std::cout << "What number to count down?";
+std::cin >> liczba;
 
-do
+for (int i = liczba; i>=0; i--)
 {
-std::cout << a << "...\n";
-
-a = a-1;
-}
-
-while (a>=0);
+std::cout << i <<std::endl; }
 
 return 0;
 }
