@@ -1,21 +1,31 @@
 #include <iostream>
+#include <string>
 
-int n;
+auto main(int, char *argv[]) -> int {
+	int input;
+	try {
+		input = std::stoi(argv[1]);
+	}
+	catch (...) {
+		std::cout << "Error";
+		return 0;
+	}
 
-int main() {
+	for (int i = 1; i <= input; i++) {
 
-std::cout <<"Podaj liczbę:";
-std::cin >> n;
-std::cout << n <<std::endl;
-
-if(n/3)
-{
-std::cout << "Fizz" <<std::endl;
-}
-
-else if(n/5)
-{
-std::cout <<"Buzz" <<std::endl;
-}
-return 0;
+		std::cout << "n: " + std::to_string(i) << + " ";
+		if (i % 3 == 0) {
+			std::cout << "Fizz";
+			if (i % 5 == 0) {
+				std::cout << "Buzz";
+			}
+			std::cout << std::endl;
+		}
+		else if (i % 5 == 0) {
+			std::cout << "Buzz" << std::endl;
+		} else {
+			std::cout << "No Fizz No Buzz" << std::endl;
+		}
+	}
+		return 0;
 }
