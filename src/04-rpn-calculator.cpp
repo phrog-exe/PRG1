@@ -9,7 +9,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-
+#include <cmath>
 
 auto pop_top(std::stack<double>& stack) -> double
 {
@@ -42,6 +42,68 @@ auto evaluate_subtraction(std::stack<double>& stack) -> void
     stack.push(a - b);
 }
 
+auto evaluate_multiply(std::stack<double>& stack) -> void
+{
+    if (stack.size() < 2) {
+        throw std::logic_error{"not enough operands for *"};
+    }
+    auto const b = pop_top(stack);
+    auto const a = pop_top(stack);
+    stack.push(a * b);
+}
+
+auto evaluate_division(std::stack<double>& stack) -> void
+{
+    if (stack.size() < 2) {
+        throw std::logic_error{"not enough operands for /"};
+    }
+    auto const b = pop_top(stack);
+    auto const a = pop_top(stack);
+    stack.push(a / b);
+}
+auto evaluate_sqrt(std::stack<double>& stack) -> void
+{
+    if (stack.size() < 1) {
+        throw std::logic_error{"not enough operands for sqrt"};
+    }
+
+    auto const a = pop_top(stack);
+    stack.push(std::sqrt((int)a));
+}
+
+auto evaluate_div2(std::stack<double>& stack) -> void
+{
+    if (stack.size() < 2) {
+        throw std::logic_error{"not enough operands for //"};
+    }
+    auto const b = pop_top(stack);
+    auto const a = pop_top(stack);
+    stack.push(std::round(a / b));
+}
+
+auto evaluate_div3(std::stack<double>& stack) -> void
+{
+    if (stack.size() < 2) {
+        throw std::logic_error{"not enough operands for %"};
+    }
+    auto const b = pop_top(stack);
+    auto const a = pop_top(stack);
+    stack.push((int)a % (int)b);
+}
+
+auto evaluate_exp(std::stack<double>& stack) -> void
+{
+    if (stack.size() < 2) {
+        throw std::logic_error{"not enough operands for **"};
+    }
+    auto const b = pop_top(stack);
+    auto const a = pop_top(stack);
+    stack.push(std::pow(a, b));
+}
+
+
+
+
 
 auto make_args(int argc, char* argv[]) -> std::vector<std::string>
 {
@@ -63,7 +125,35 @@ auto main(int argc, char* argv[]) -> int
                 evaluate_addition(stack);
             } else if (each == "-") {
                 evaluate_subtraction(stack);
-            } else {
+            }  else if (each == "*") {
+                evaluate_multiply(stack);
+              }  else if (each == "/") {
+                evaluate_division(stack);
+              } else if (each == "sqrt") {
+                evaluate_sqrt(stack);
+
+              } else if (each == "//") {
+               evaluate_div2(stack);
+
+              } else if (each == "%") {
+               evaluate_div3(stack);
+
+              } else if (each == "**") {
+               evaluate_exp(stack);
+              }
+
+
+
+
+
+
+
+
+
+
+
+
+          else {
                 stack.push(std::stod(each));
             }
         } catch (std::logic_error const& e) {
