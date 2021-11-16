@@ -91,15 +91,24 @@ auto evaluate_div3(std::stack<double>& stack) -> void
     stack.push((int)a % (int)b);
 }
 
-auto evaluate_exp(std::stack<double>& stack) -> void
+auto evaluate_pow(std::stack<double>& stack) -> void
 {
     if (stack.size() < 2) {
         throw std::logic_error{"not enough operands for **"};
     }
     auto const b = pop_top(stack);
     auto const a = pop_top(stack);
-    stack.push(std::pow(a, b));
+    stack.push( std::pow(a,b));
 }
+
+auto evaluate_log10(std::stack<double>& stack) -> void {
+    if (stack.size() < 1) {
+        throw std::logic_error{"not enough operands for log10"};
+    }
+    auto const a = pop_top(stack);
+    stack.push(std::log10(a));
+}
+
 
 
 
@@ -139,11 +148,9 @@ auto main(int argc, char* argv[]) -> int
                evaluate_div3(stack);
 
               } else if (each == "**") {
-               evaluate_exp(stack);
-              }
-
-
-
+               evaluate_pow(stack);
+              } else if (each == "log10") {
+               evaluate_log10(stack);
 
 
 
