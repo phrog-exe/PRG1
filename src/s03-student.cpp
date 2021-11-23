@@ -17,7 +17,7 @@ auto s24404::Student::to_string() const ->std::string {
 
 auto main() -> int {
     auto student = s24404::Student{"Weronika", "Głódkowska", "s24404", 1, 4.9};
-    std::cout <<student.to_string() <<"\n";
+    std::cout << student.to_string() <<"\n";
 
 return 0;
 }
