@@ -1,12 +1,13 @@
 #include <iostream>
 
-auto main(int argc, char *argv[]) -> int {
-    if(argc != 2) {
+auto main(int argc, char* argv[]) -> int
+{
+    if (argc != 2) {
         std::cout << "Wrong amount of arguments!\n";
         return 1;
     }
 
-    auto pass = std::string{argv[1]};
+    auto pass    = std::string{argv[1]};
     auto confirm = std::string{};
 
     do {
