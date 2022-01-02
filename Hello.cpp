@@ -1,7 +1,7 @@
-# include <iostream>
+#include <iostream>
 
-auto main () -> int
+auto main() -> int
 {
-std :: cout << " Hello,  Weronika!\n";
-return 0;
+    std ::cout << " Hello,  Weronika!\n";
+    return 0;
 }
