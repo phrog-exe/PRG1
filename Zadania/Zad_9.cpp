@@ -1,43 +1,39 @@
 #include <iostream>
 #include <string>
 
-std::string type_word() {
-std::string word;
- std::cout << "Type your word in: "<< std::endl;
- std::cin >> word;
-     return word;
-}
 
-bool is_palindrome() {
-    std::string word;
-    char first;
-    char last;
 
- word = type_word();
- int dl;
- int i;
+bool is_palindrome(std::string word)
+{
+    std::string invert;
+    int length = word.length();
 
-    for (i=1; i<=word.size(); i++){
-            dl = word.size();
-        first = word[dl - word.size() + i - 1];
-        last = word[word.size() - i];
-            if (first == last)
-                 continue;
-              else
-                 return 0;
+
+    for(int i = 0; i < length; i++)
+    {
+        invert += word[length - i - 1];
     }
-return 1;
+
+
+    return word == invert;
 }
 
 int main()
 {
-    if (is_palindrome() == 1)
-        std::cout << "This is a Palindrome." << std::endl;
-        
-   else if (is_palindrome() == 0)
-        std::cout << "That is not a Palindrome." << std::endl;
- 
-        else
-            std::cout << "An error occurred...";
+    std::string word;
+
+    std::cout << "Type your word in: " << std::endl;
+    std::cin >> word;
+
+    if (is_palindrome(word) == true)
+    {
+        std::cout << "This is a palindrome" << std::endl;
+    }
+    else
+    {
+        std::cout << "This is not a palindrome" << std::endl;
+    }
+
+
     return 0;
 }
