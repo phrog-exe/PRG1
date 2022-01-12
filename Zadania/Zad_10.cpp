@@ -21,11 +21,12 @@ void box_print() {
  }
 
     width = dl + 2;
-    for(int i=0; i < width; i++) {
+    for(int i=0; i < width+2; i++) {
             std::cout<<"*";
-            std::cout << std::endl;
+            
         }
-
+std::cout << std::endl;
+ 
    for (int j = 0; j < 5; j++)
     {
         std::cout << "* ";
@@ -39,7 +40,7 @@ void box_print() {
         std::cout << std::endl;
     }
 
-    for (int i = 0; i < width; i++)
+    for (int i = 0; i < width+2; i++)
         std::cout << "*";
 
 }
