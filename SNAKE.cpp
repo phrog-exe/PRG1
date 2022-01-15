@@ -93,7 +93,7 @@ void logic()
     do{     //wykonuj....
                 foodXcoord=rand()%width;
                 foodYcoord=rand()%height;
-                //...dopóki board wylosowane nie jest puste
+                //...dopÃ³ki board wylosowane nie jest puste
             }while(board[foodXcoord][foodYcoord]!='x');
 
             board[foodXcoord][foodYcoord]='j';
