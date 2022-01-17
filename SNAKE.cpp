@@ -12,7 +12,7 @@ int key;
 int length=3, history_of_coordX[10000], history_of_coordY[10000];
 int ntail=0;
 char rd=188, ru=187, lu=201, ld=200, horizontal=205, vertical=186;
-char direction='l'; //r - righ, l - lef, u - up, d - down
+char direction='r'; //r - righ, l - lef, u - up, d - down
 char board[35][35];
 /*  board[0][0], board[1][0], board[2][0], board[3][0], board[4][0], board[5][0].
     board[0][1], board[1][1], board[2][1], board[3][1], board[4][1], board[5][1].
