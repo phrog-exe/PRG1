@@ -25,7 +25,7 @@ char board[35][35];
 // x - board is empty, w - snake is on a board, j - food
 
 
-int notify(int &x)
+void notify(int &x)
 {
     std::cout << "Come on I said 5 to 35." << std::endl;
     std::cout << "Your last chance" << std::endl;
