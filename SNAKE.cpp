@@ -9,10 +9,10 @@ int up, down, lef, righ;
 int snakeXcoord, snakeYcoord;
 int foodXcoord, foodYcoord;
 int key;
-int length=3, historiaWspolzednejX[10000], historiaWspolzednejY[10000];
-int ile=0;
-char waz=219, jed=43, pd=188, pg=187, lg=201, ld=200, poz=205, pio=186;
-char direction='l'; //p - righ, l - lef, g - up, d - down
+int length=3, history_of_coordX[10000], history_of_coordY[10000];
+int ntail=0;
+char rd=188, ru=187, lu=201, ld=200, horizontal=205, vertical=186;
+char direction='l'; //r - righ, l - lef, u - up, d - down
 char board[35][35];
 /*  board[0][0], board[1][0], board[2][0], board[3][0], board[4][0], board[5][0].
     board[0][1], board[1][1], board[2][1], board[3][1], board[4][1], board[5][1].
@@ -22,7 +22,7 @@ char board[35][35];
     board[0][34],
 */
 
-// p - board is empty, w - snake is on a board, j - food
+// x - board is empty, w - snake is on a board, j - food
 
 
 int notify(int &x)
@@ -35,13 +35,14 @@ int notify(int &x)
 
 void setup()
 {
+    std::cout <<"SNAKE GAME" << std::endl <<std::endl;
    std::cout << "Set board width from 5 to 35:" << std::endl;
     std::cin >> width;
-    if (width<5 || width>35) notify(width);
+    if (width < 5 || width > 35) notify(width);
 
     std::cout << "Set board height from 5 to 35:" << std::endl;
     std::cin >> height;
-    if (height<5 || height>35) notify(height);
+    if (height < 5 || height > 35) notify(height);
 
     std::cout << "Set speed 1 to 10" << std::endl;
     std::cin >> speed;
@@ -107,23 +108,23 @@ void draw()
 
     system("cls");// oczyszczanie ekranu
         //gorna ramka
-        std::cout << lg;
+        std::cout << lu;
         for(int i = 0; i < width; i++)
         {
-            std::cout << poz << poz;
+            std::cout << horizontal << horizontal;
         }
-        std::cout << pg;
+        std::cout << ru;
 
         for(int i = 0; i < height; i++)
         {
-            std::cout << std::endl << pio; // lewa ramka
+            std::cout << std::endl << vertical; // lewa ramka
             for(int j = 0; j < width; j++)
             {
                 if(board[j][i]=='x') std::cout << "  ";
-                if(board[j][i]=='w') std::cout << waz << waz;
-                if(board[j][i]=='j') std::cout << jed << jed;
+                if(board[j][i]=='w') std::cout << " o";
+                if(board[j][i]=='j') std::cout << " x";
             }
-            std::cout << pio; // prawa ramka
+            std::cout << vertical; // prawa ramka
 
         }
 
@@ -132,13 +133,12 @@ void draw()
         std::cout << ld;
         for(int i = 0; i < width; i++)
         {
-            std::cout << poz << poz;
+            std::cout << horizontal << horizontal;
         }
-        std::cout << pd;
+        std::cout << rd;
         Sleep(1000/speed); // czekaj
 
 }
-
 
 
 int main()
@@ -149,9 +149,9 @@ int main()
     //rozpoczecie gry
     for(;;)
     {
-        ile++;
-        historiaWspolzednejX[ile]=snakeXcoord;
-        historiaWspolzednejY[ile]=snakeYcoord;
+        ntail++;
+        history_of_coordX[ntail]=snakeXcoord;
+        history_of_coordY[ntail]=snakeYcoord;
 
     draw();
     if(kbhit()) //jesli zostanie nacisniety key
@@ -160,17 +160,17 @@ int main()
             if(key==224)key+=getch();
             if(key==0)key-=getch();
 
-            if(key==up) direction='g';
+            if(key==up) direction='u';
             if(key==down) direction='d';
             if(key==lef) direction='l';
-            if(key==righ) direction='p';
+            if(key==righ) direction='r';
 
         }
 
         if(direction=='d') snakeYcoord++;
-        if(direction=='g') snakeYcoord--;
+        if(direction=='u') snakeYcoord--;
         if(direction=='l') snakeXcoord--;
-        if(direction=='p') snakeXcoord++;
+        if(direction=='r') snakeXcoord++;
 
 
 
@@ -188,7 +188,7 @@ int main()
         }
 
         // co jesli zje jedzenie
-        if(board[snakeXcoord][snakeYcoord=='j'])
+        if(board[snakeXcoord][snakeYcoord]=='j')
         {
             length++;
             //losowanie pola dla jedzenia
@@ -201,9 +201,10 @@ int main()
             board[foodXcoord][foodYcoord]='j';
         }
         else //kasowanie ogona
-                board[historiaWspolzednejX[ile-length]][historiaWspolzednejY[ile-length]]='x';
 
-      board[snakeXcoord][snakeYcoord]='w';
+            board[history_of_coordX[ntail-length]][history_of_coordY[ntail-length]]='x';
+
+            board[snakeXcoord][snakeYcoord]='w';
 
 
 
@@ -212,3 +213,4 @@ int main()
     getch();
     return 0;
 }
+
