@@ -47,34 +47,34 @@ void setup()
     std::cout << "Set speed 1 to 10" << std::endl;
     std::cin >> speed;
     if(speed < 1) speed = 1;
-    if(speed > 10) speed = 10;
+    else if(speed > 10) speed = 10;
 
     std::cout << "Press buttons you want to play" << std::endl;
     std::cout << "up" << std::endl;
     up =  getch();
-    if(up==224)up+=getch();
-    if(up==0)up-=getch();
+    if(up==224) up+=getch();
+    else if(up==0) up-=getch();
 
     std::cout << "down" << std::endl;
     down = getch();
-    if(down==224)down=down+getch();
-    if(down==0)down-=getch();
+    if(down==224) down=down+getch();
+    else if(down==0) down-=getch();
 
     std::cout << "left" << std::endl;
     lef = getch();
-    if(lef==224)lef+=getch();
-    if(lef==0)lef-=getch();
+    if(lef==224) lef+=getch();
+    else if(lef==0) lef-=getch();
 
     std::cout << "right" << std::endl;
     righ = getch();
     if(righ==224)righ+=getch();
-    if(righ==0)righ-=getch();
+    else if(righ==0)righ-=getch();
 
 }
 
 void logic()
 {
-    // tutaj nadajemy wartosci "p" tab board
+    // nadajemy wartosci "p" tab board
 
     for(int i = 0; i  < height ; i++)
     {
@@ -139,6 +139,59 @@ void draw()
         Sleep(1000/speed); // czekaj
 
 }
+void input(){
+
+        if(kbhit()) //jesli zostanie nacisniety key
+        {
+            key=getch();
+            if(key==224) {key+=getch();}
+            else if(key==0) {key-=getch();}
+
+            if(key==up) {direction='u';}
+            else if(key==down) {direction='d';}
+            else if(key==lef) {direction='l';}
+            else {direction='r';}
+
+        }
+           }
+
+
+void moves() {
+
+         if(direction=='d') {snakeYcoord++;}
+         else if(direction=='u') {snakeYcoord--;}
+         else if(direction=='l') {snakeXcoord--;}
+         else {snakeXcoord++;}
+
+
+
+        //przechodzenie przez sciany
+        if(snakeXcoord==width) {snakeXcoord=0;}
+        else if(snakeXcoord==-1) {snakeXcoord=width-1;}
+        else if(snakeYcoord==height) {snakeYcoord=0;}
+        else if(snakeYcoord==-1) {snakeYcoord=height-1;}
+
+}
+void logic2() {
+                     // co jesli zje jedzenie
+        if(board[snakeXcoord][snakeYcoord]=='j')
+        {
+            length++;
+                    //losowanie pola dla jedzenia
+            do{
+                foodXcoord=rand()%width;
+                foodYcoord=rand()%height;
+                //...dopoki board wylosowane nie jest puste
+            }while(board[foodXcoord][foodYcoord]!='x');
+
+            board[foodXcoord][foodYcoord]='j';
+        }
+        else //kasowanie ogona
+
+            board[history_of_coordX[ntail-length]][history_of_coordY[ntail-length]]='x';
+
+            board[snakeXcoord][snakeYcoord]='w';
+}
 
 
 int main()
@@ -154,58 +207,15 @@ int main()
         history_of_coordY[ntail]=snakeYcoord;
 
     draw();
-    if(kbhit()) //jesli zostanie nacisniety key
-        {
-            key=getch();
-            if(key==224)key+=getch();
-            if(key==0)key-=getch();
-
-            if(key==up) direction='u';
-            if(key==down) direction='d';
-            if(key==lef) direction='l';
-            if(key==righ) direction='r';
-
-        }
-
-        if(direction=='d') snakeYcoord++;
-        if(direction=='u') snakeYcoord--;
-        if(direction=='l') snakeXcoord--;
-        if(direction=='r') snakeXcoord++;
-
-
-
-        //przechodzenie przez sciany
-        if(snakeXcoord==width) snakeXcoord=0;
-        if(snakeXcoord==-1) snakeXcoord=width-1;
-        if(snakeYcoord==height) snakeYcoord=0;
-        if(snakeYcoord==-1) snakeYcoord=height-1;
-
-        //co jesli wpadnie w siebie
+    input();
+    moves();
+                  //co jesli wpadnie w siebie
         if(board[snakeXcoord][snakeYcoord]=='w')
         {
-            std::cout << std::endl << "YOU LOST :(    score: " << length+1;
+            std::cout << std::endl << "YOU LOST :(    score: " << length+10;
             break;
         }
-
-        // co jesli zje jedzenie
-        if(board[snakeXcoord][snakeYcoord]=='j')
-        {
-            length++;
-            //losowanie pola dla jedzenia
-            do{     //wykonuj....
-                foodXcoord=rand()%width;
-                foodYcoord=rand()%height;
-                //...dopoki board wylosowane nie jest puste
-            }while(board[foodXcoord][foodYcoord]!='x');
-
-            board[foodXcoord][foodYcoord]='j';
-        }
-        else //kasowanie ogona
-
-            board[history_of_coordX[ntail-length]][history_of_coordY[ntail-length]]='x';
-
-            board[snakeXcoord][snakeYcoord]='w';
-
+    logic2();
 
 
     }//koniec petli for(;;)
@@ -213,4 +223,5 @@ int main()
     getch();
     return 0;
 }
+
 
