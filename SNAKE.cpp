@@ -5,44 +5,41 @@
 #include <windows.h> //sleep()
 
 int width, height, speed;
-int up, down, lef, righ;
+int upp, dow, righ, lef;
 int snakeXcoord, snakeYcoord;
 int foodXcoord, foodYcoord;
 int key;
 int length=3, history_of_coordX[10000], history_of_coordY[10000];
 int ntail=0;
 char rd=188, ru=187, lu=201, ld=200, horizontal=205, vertical=186;
-char direction='r'; //r - righ, l - lef, u - up, d - down
-char board[35][35];
+enum Directions { right, left, up, down };
+Directions dir;
+char board[20][20];
 /*  board[0][0], board[1][0], board[2][0], board[3][0], board[4][0], board[5][0].
     board[0][1], board[1][1], board[2][1], board[3][1], board[4][1], board[5][1].
     board[0][2], board[1][2], board[2][2], board[3][2], board[4][2], board[5][2].
-    .
-    .
-    board[0][34],
 */
-
 // x - board is empty, w - snake is on a board, j - food
 
 
 void notify(int &x)
 {
-    std::cout << "Come on I said 5 to 35." << std::endl;
+    std::cout << "Come on I said 5 to 20." << std::endl;
     std::cout << "Your last chance" << std::endl;
     std::cin >> x;
-    if (x < 5 || x > 35) x = 15;
+    if (x < 5 || x > 20) x = 15;
 }
 
 void setup()
 {
     std::cout <<"SNAKE GAME" << std::endl <<std::endl;
-   std::cout << "Set board width from 5 to 35:" << std::endl;
+   std::cout << "Set board width from 5 to 20:" << std::endl;
     std::cin >> width;
-    if (width < 5 || width > 35) notify(width);
+    if (width < 5 || width > 20) notify(width);
 
-    std::cout << "Set board height from 5 to 35:" << std::endl;
+    std::cout << "Set board height from 5 to 20:" << std::endl;
     std::cin >> height;
-    if (height < 5 || height > 35) notify(height);
+    if (height < 5 || height > 20) notify(height);
 
     std::cout << "Set speed 1 to 10" << std::endl;
     std::cin >> speed;
@@ -51,14 +48,14 @@ void setup()
 
     std::cout << "Press buttons you want to play" << std::endl;
     std::cout << "up" << std::endl;
-    up =  getch();
-    if(up==224) up+=getch();
-    else if(up==0) up-=getch();
+    upp =  getch();
+    if(upp==224) upp+=getch();
+    else if(upp==0) upp-=getch();
 
     std::cout << "down" << std::endl;
-    down = getch();
-    if(down==224) down=down+getch();
-    else if(down==0) down-=getch();
+    dow = getch();
+    if(dow==224) dow+=getch();
+    else if(dow==0) dow-=getch();
 
     std::cout << "left" << std::endl;
     lef = getch();
@@ -80,7 +77,7 @@ void logic()
     {
         for(int j = 0; j < width; j++)
         {
-            board[j][i]='x';
+            board[j][i] = 'x';
         }
     }
     srand(time(NULL)); //generator losowania
@@ -143,24 +140,26 @@ void input(){
 
         if(kbhit()) //jesli zostanie nacisniety key
         {
-            key=getch();
+            key = getch();
             if(key==224) {key+=getch();}
             else if(key==0) {key-=getch();}
 
-            if(key==up) {direction='u';}
-            else if(key==down) {direction='d';}
-            else if(key==lef) {direction='l';}
-            else {direction='r';}
+            if(key==upp) {dir = up;}
+            else if (key==dow) {dir = down;}
+            else if (key==lef) {dir = left;}
+            else {dir = right;}
+
+             }
 
         }
-           }
+
 
 
 void moves() {
 
-         if(direction=='d') {snakeYcoord++;}
-         else if(direction=='u') {snakeYcoord--;}
-         else if(direction=='l') {snakeXcoord--;}
+         if(dir == down) {snakeYcoord++;}
+         else if(dir == up) {snakeYcoord--;}
+         else if(dir == left) {snakeXcoord--;}
          else {snakeXcoord++;}
 
 
@@ -196,6 +195,7 @@ void logic2() {
 
 int main()
 {
+    system("MODE con cols=50 lines=30");
     setup();
     logic();
 
